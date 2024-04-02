@@ -6,7 +6,7 @@
 int GetPrioriti(char operand) {
     if (operand == '+' || operand == '-') return 1;
     if (operand == '*' || operand == '/') return 2;
-    else return 0;
+    return 0;
 }
 
 bool ProverkaNaOperator(char c) {
@@ -23,12 +23,12 @@ std::string infx2pstfx(std::string inf) {
         } else if (c == '(') {
             stack.push(c);
         } else if (ProverkaNaOperator(c)) {
-            while (!stack.isEmpty() && GetPrioriti(c) > GetPrioriti(stack.get())) {
+            while (!stack.isEmpty() && GetPrioriti(stack.get()) >= GetPrioriti(c)) {
                 postfix += stack.get();
                 postfix += ' ';
-                stack.push(c);
+                stack.pop(c);
             }
-            stack.get();
+            stack.push(c);
         } else if (c == ')') {
             while (!stack.isEmpty() && stack.get() != '(') {
                 postfix += stack.get();
@@ -76,6 +76,9 @@ int eval(std::string post) {
                     break;
             }
         }
+    }
+    if (Number != "") {
+        stack.push(std::stoi(Number));
     }
     return stack.get();
 }
