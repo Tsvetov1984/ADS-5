@@ -18,29 +18,25 @@ std::string infx2pstfx(std::string inf) {
     TStack<char, 100> stack;
     for (char c : inf) {
         if (isdigit(c)) {
-            postfix += c;
-            postfix += ' ';
+            postfix = postfix + c + ' ';
         } else if (c == '(') {
             stack.push(c);
         } else if (ProverkaNaOperator(c)) {
             while (!stack.isEmpty() && GetPrior(stack.get()) >= GetPrior(c)) {
-                postfix += stack.get();
-                postfix += ' ';
+                postfix = postfix + stack.get() + ' ';
                 stack.pop();
             }
             stack.push(c);
         } else if (c == ')') {
             while (!stack.isEmpty() && stack.get() != '(') {
-                postfix += stack.get();
-                postfix += ' ';
+                postfix = postfix + stack.get() + ' ';
                 stack.pop();
             }
             stack.pop();
         }
     }
     while (!stack.isEmpty()) {
-        postfix += stack.get();
-        postfix += ' ';
+        postfix = postfix + stack.get() + ' ';
         stack.pop();
     }
     return postfix;
@@ -53,7 +49,7 @@ int eval(std::string post) {
         if (isdigit(c)) {
             Number += c;
         } else if (Number != "") {
-            stack.push(std::stoi(Number));
+            stack.push(std::atoi(Number.c_str()));
             Number = "";
         }
         if (ProverkaNaOperator(c)) {
@@ -76,6 +72,9 @@ int eval(std::string post) {
                     break;
             }
         }
+    }
+    if (Number != "") {
+        stack.push(std::atoi(Number.c_str()));
     }
     return stack.get();
 }
