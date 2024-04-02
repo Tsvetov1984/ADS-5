@@ -3,7 +3,7 @@
 #include <map>
 #include "tstack.h"
 
-int GetPrioriti(char operand) {
+int GetPrior(char operand) {
     if (operand == '+' || operand == '-') return 1;
     if (operand == '*' || operand == '/') return 2;
     return 0;
@@ -16,17 +16,17 @@ bool ProverkaNaOperator(char c) {
 std::string infx2pstfx(std::string inf) {
     std::string postfix;
     TStack<char, 100> stack;
-    for (char c: inf) {
+    for (char c : inf) {
         if (isdigit(c)) {
             postfix += c;
             postfix += ' ';
         } else if (c == '(') {
             stack.push(c);
         } else if (ProverkaNaOperator(c)) {
-            while (!stack.isEmpty() && GetPrioriti(stack.get()) >= GetPrioriti(c)) {
+            while (!stack.isEmpty() && GetPrior(stack.get()) >= GetPrior(c)) {
                 postfix += stack.get();
                 postfix += ' ';
-                stack.pop(c);
+                stack.pop();
             }
             stack.push(c);
         } else if (c == ')') {
@@ -49,7 +49,7 @@ std::string infx2pstfx(std::string inf) {
 int eval(std::string post) {
     TStack<int, 100> stack;
     std::string Number;
-    for (char c: post) {
+    for (char c : post) {
         if (isdigit(c)) {
             Number += c;
         } else if (Number != "") {
