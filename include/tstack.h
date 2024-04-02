@@ -6,11 +6,11 @@
 
 template<typename T, int size>
 class TStack {
-    private:
+ private:
     T data[100];
     int top;
 
-    public:
+ public:
     TStack() : top(-1) {}
     void push(T value) {
         if (!isFull())
@@ -18,11 +18,9 @@ class TStack {
         else
             throw std::string("Full");
     }
-
     T get() const {
         return data[top];
     }
-
     T pop() {
         if (isEmpty()) {
             throw std::string("Empty");
@@ -30,11 +28,9 @@ class TStack {
             return data[top--];
         }
     }
-
     bool isEmpty() const {
         return top == -1;
     }
-
     bool isFull() const {
         return top == size - 1;
     }

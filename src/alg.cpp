@@ -77,8 +77,5 @@ int eval(std::string post) {
             }
         }
     }
-    if (Number != "") {
-        stack.push(std::stoi(Number));
-    }
     return stack.get();
 }
