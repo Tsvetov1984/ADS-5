@@ -39,6 +39,9 @@ std::string infx2pstfx(std::string inf) {
         postfix = postfix + stack.get() + ' ';
         stack.pop();
     }
+    if (!postfix.empty()) {
+        postfix.pop_back();
+    }
     return postfix;
 }
 
